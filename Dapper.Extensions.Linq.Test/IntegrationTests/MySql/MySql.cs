@@ -19,7 +19,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.MySql
         [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
-            using (var mySqlConnection = new MySqlConnection("Server=localhost;Port=3306;uid=root;password=password!"))
+            using (var mySqlConnection = new MySqlConnection("Server=localhost;Port=3306;uid=root;password=Password12!"))
             {
                 mySqlConnection.Open();
                 using (var cmd = new MySqlCommand(string.Format("CREATE DATABASE IF NOT EXISTS `{0}`", DatabaseName),
