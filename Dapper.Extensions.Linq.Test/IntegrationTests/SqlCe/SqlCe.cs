@@ -59,6 +59,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlCe
                 ReadScriptFile("CreatePhoneTable")
             };
 
+            _connection.Open();
             foreach (var setupFile in files)
             {
                 using (var cmd = new SqlCeCommand(setupFile, _connection))
