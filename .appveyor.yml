@@ -11,7 +11,9 @@ services:
 #  Build Script                   #
 #---------------------------------#
 build_script:
-  - ps: .\build.ps1 -Target AppVeyor
+  - ps: del -Recurse -Force .nuget
+  - ps: dotnet test --test-adapter-path:. --logger:Appveyor .\Dapper.Extensions.Linq.sln /restore
+  - ps: dotnet pack .\Dapper.Extensions.Linq.sln /p:Configuration=Release /restore
 
 #---------------------------------#
 # Tests
@@ -39,3 +41,6 @@ branches:
     - master
     - /release/.*/
     - /hotfix/.*/
+
+artifacts:
+  - path: '**\*.nupkg'
