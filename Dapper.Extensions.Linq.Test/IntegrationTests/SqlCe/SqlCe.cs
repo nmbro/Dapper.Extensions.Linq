@@ -18,7 +18,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlCe
     {
         private SqlCeConnection _connection;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["__DefaultSqlCe"].ConnectionString;
@@ -61,7 +61,10 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlCe
 
             foreach (var setupFile in files)
             {
-                _connection.Execute(setupFile);
+                using (var cmd = new SqlCeCommand(setupFile, _connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 

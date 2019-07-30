@@ -25,7 +25,10 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlServer
                     CREATE DATABASE {0};
                 END
                 ";
-                sqlConnection.Execute(string.Format(sqlCreateDatabase, DatabaseName));
+                using (var cmd = new SqlCommand(string.Format(sqlCreateDatabase, DatabaseName)))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
 
             var container = new Castle.Windsor.WindsorContainer();
@@ -54,7 +57,10 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlServer
 
             foreach (var setupFile in files)
             {
-                connection.Execute(setupFile);
+                using (var cmd = new SqlCommand(setupFile, connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
 
             return container;

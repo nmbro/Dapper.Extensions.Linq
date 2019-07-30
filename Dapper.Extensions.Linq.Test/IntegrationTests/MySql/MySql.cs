@@ -16,12 +16,16 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.MySql
     {
         const string DatabaseName = "dapperTest";
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
             using (var mySqlConnection = new MySqlConnection("Server=localhost;Port=3306;uid=root;password=password!"))
             {
-                mySqlConnection.Execute(string.Format("CREATE DATABASE IF NOT EXISTS `{0}`", DatabaseName));
+                using (var cmd = new MySqlCommand(string.Format("CREATE DATABASE IF NOT EXISTS `{0}`", DatabaseName),
+                    mySqlConnection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
 
             Container = new Castle.Windsor.WindsorContainer();
@@ -49,7 +53,11 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.MySql
 
             foreach (var setupFile in files)
             {
-                connection.Execute(setupFile);
+                using (var cmd = new MySqlCommand(setupFile,
+                    connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 

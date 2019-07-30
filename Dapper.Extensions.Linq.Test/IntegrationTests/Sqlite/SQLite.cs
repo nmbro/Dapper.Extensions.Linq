@@ -18,7 +18,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SQLite
     {
         private SQLiteConnection _connection;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void RunBeforeAnyTests()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["__DefaultSQLite"].ConnectionString;
@@ -56,7 +56,10 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SQLite
 
             foreach (var setupFile in files)
             {
-                _connection.Execute(setupFile);
+                using (var cmd = new SQLiteCommand(setupFile, _connection))
+                {
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
