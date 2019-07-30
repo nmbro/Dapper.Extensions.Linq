@@ -6,7 +6,7 @@
     <TargetFramework>net45</TargetFramework>
     <IsPackable>false</IsPackable>
     <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
-    <CopySQLiteInteropFiles>false</CopySQLiteInteropFiles>
+    <CopySQLiteInteropFiles>true</CopySQLiteInteropFiles>
     <CleanSQLiteInteropFiles>false</CleanSQLiteInteropFiles>
     <CollectSQLiteInteropFiles>false</CollectSQLiteInteropFiles>
   </PropertyGroup>
@@ -22,6 +22,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
+  <ItemGroup>
+    <SqlLiteInteropFile Include="$(OutputPath)x86\SQLite.Interop.dll" />
+  </ItemGroup>
+  <Target Name="CopyInteropFiles" AfterTargets="CopyFilesToOutputDirectory">
+    <Copy SourceFiles="@(SqlLiteInteropFile)" DestinationFolder="$(OutputPath)" />
+  </Target>
   <ItemGroup>
     <ProjectReference Include="..\Dapper.Extensions.Linq.CastleWindsor\Dapper.Extensions.Linq.CastleWindsor.csproj" />
     <ProjectReference Include="..\Dapper.Extensions.Linq.Core\Dapper.Extensions.Linq.Core.csproj" />

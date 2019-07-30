@@ -54,6 +54,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SQLite
                 ReadScriptFile("CreatePhoneTable")
             };
 
+            _connection.Open();
             foreach (var setupFile in files)
             {
                 using (var cmd = new SQLiteCommand(setupFile, _connection))

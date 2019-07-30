@@ -9,6 +9,10 @@
     <Product>$(AssemblyName)</Product>
     <Title>$(AssemblyName)</Title>
     <Copyright>Copyright ©  2015</Copyright>
+    <ContentSQLiteInteropFiles>true</ContentSQLiteInteropFiles>
+    <CopySQLiteInteropFiles>true</CopySQLiteInteropFiles>
+    <CleanSQLiteInteropFiles>false</CleanSQLiteInteropFiles>
+    <CollectSQLiteInteropFiles>false</CollectSQLiteInteropFiles>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" version="1.0.111" />
