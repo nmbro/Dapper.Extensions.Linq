@@ -21,6 +21,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.MySql
         {
             using (var mySqlConnection = new MySqlConnection("Server=localhost;Port=3306;uid=root;password=password!"))
             {
+                mySqlConnection.Open();
                 using (var cmd = new MySqlCommand(string.Format("CREATE DATABASE IF NOT EXISTS `{0}`", DatabaseName),
                     mySqlConnection))
                 {
@@ -51,6 +52,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.MySql
                 ReadScriptFile("CreatePhoneTable")
             };
 
+            connection.Open();
             foreach (var setupFile in files)
             {
                 using (var cmd = new MySqlCommand(setupFile,

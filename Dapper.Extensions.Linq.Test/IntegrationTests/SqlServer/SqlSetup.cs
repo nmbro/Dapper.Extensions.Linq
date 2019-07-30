@@ -16,9 +16,9 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlServer
 
         public static Castle.Windsor.WindsorContainer Configuration()
         {
-
             using (var sqlConnection = new SqlConnection("Data Source=.;Integrated security=True;"))
             {
+                sqlConnection.Open();
                 const string sqlCreateDatabase = @"
                 IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = '{0}')
                 BEGIN
@@ -55,6 +55,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlServer
 
             };
 
+            connection.Open();
             foreach (var setupFile in files)
             {
                 using (var cmd = new SqlCommand(setupFile, connection))
