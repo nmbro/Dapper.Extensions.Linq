@@ -25,7 +25,7 @@ namespace Dapper.Extensions.Linq.Test.IntegrationTests.SqlServer
                     CREATE DATABASE {0};
                 END
                 ";
-                using (var cmd = new SqlCommand(string.Format(sqlCreateDatabase, DatabaseName)))
+                using (var cmd = new SqlCommand(string.Format(sqlCreateDatabase, DatabaseName), sqlConnection))
                 {
                     cmd.ExecuteNonQuery();
                 }
